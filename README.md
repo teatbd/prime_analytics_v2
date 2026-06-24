@@ -83,7 +83,7 @@ This allows analyzing the local structure of primes.
 
 📊 Analysis & Results
 🔹 1. Density (Real vs Theoretical)
-densidad_primos.png
+plots/densidad_primos.png
 
 Real: π(n) / n
 Theoretical: 1 / log(n)
@@ -92,7 +92,7 @@ Theoretical: 1 / log(n)
 Both curves converge as n increases.
 
 🔹 2. Error Analysis
-error_densidad.png
+plots/error_densidad.png
 ✅ Conclusion:
 
 Error decreases with n
@@ -101,7 +101,7 @@ The model improves at scale
 
 
 🔹 3. Gap Distribution
-hist_gaps.png
+plots/hist_gaps.png
 ✅ Insight:
 
 Many small gaps
@@ -110,7 +110,7 @@ Right-skewed distribution with long tail
 
 
 🔹 4. Gap Evolution vs log(n)
-gap_vs_log.png
+plots/gap_vs_log.png
 ✅ Key result:
 Average gap∼log⁡(n)\text{Average gap} \sim \log(n)Average gap∼log(n)
 
