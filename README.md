@@ -69,7 +69,10 @@ density_teo = 1 / log(n)
 error = density_real - density_teo
 
 This connects directly with the Prime Number Theorem:
-π(n)∼nlog⁡(n)\pi(n) \sim \frac{n}{\log(n)}π(n)∼log(n)n
+\[
+\pi(n) \sim \frac{n}{\log(n)}
+\]
+``
 
 📐 Gap analysis
 
@@ -80,7 +83,7 @@ This allows analyzing the local structure of primes.
 
 📊 Analysis & Results
 🔹 1. Density (Real vs Theoretical)
-plots/densidad_primos.png
+densidad_primos.png
 
 Real: π(n) / n
 Theoretical: 1 / log(n)
@@ -89,7 +92,7 @@ Theoretical: 1 / log(n)
 Both curves converge as n increases.
 
 🔹 2. Error Analysis
-plots/error_densidad.png
+error_densidad.png
 ✅ Conclusion:
 
 Error decreases with n
@@ -98,7 +101,7 @@ The model improves at scale
 
 
 🔹 3. Gap Distribution
-plots/hist_gaps.png
+hist_gaps.png
 ✅ Insight:
 
 Many small gaps
@@ -107,7 +110,7 @@ Right-skewed distribution with long tail
 
 
 🔹 4. Gap Evolution vs log(n)
-plots/gap_vs_log.png
+gap_vs_log.png
 ✅ Key result:
 Average gap∼log⁡(n)\text{Average gap} \sim \log(n)Average gap∼log(n)
 
