@@ -49,7 +49,8 @@ This significantly improves performance for large values of n.
 n = 20,000,000
 
 📊 Example Visualization
-plots/gap_vs_log.png
+
+![Gap vs log](plots/gap_vs_log.png)
 
 📊 Dataset Structure
 
@@ -82,7 +83,7 @@ This allows analyzing the local structure of primes.
 
 📊 Analysis & Results
 🔹 1. Density (Real vs Theoretical)
-plots/densidad_primos.png
+![Density](plots/densidad_primos.png)
 
 Real: π(n) / n
 Theoretical: 1 / log(n)
@@ -91,7 +92,7 @@ Theoretical: 1 / log(n)
 Both curves converge as n increases.
 
 🔹 2. Error Analysis
-plots/error_densidad.png
+![Error](plots/error_densidad.png)
 ✅ Conclusion:
 
 Error decreases with n
@@ -100,7 +101,7 @@ The model improves at scale
 
 
 🔹 3. Gap Distribution
-plots/hist_gaps.png
+![Gap Histogram](plots/hist_gaps.png)
 ✅ Insight:
 
 Many small gaps
@@ -109,7 +110,7 @@ Right-skewed distribution with long tail
 
 
 🔹 4. Gap Evolution vs log(n)
-plots/gap_vs_log.png
+![Gap vs log](plots/gap_vs_log.png)
 ✅ Key result:
 Average gap∼log⁡(n)\text{Average gap} \sim \log(n)Average gap∼log(n)
 
