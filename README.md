@@ -39,6 +39,7 @@ def criba(n):
             es_primo[i*i:n+1:i] = False
 
     return np.where(es_primo)[0]
+```
 
 ✅ Key improvement
 This version uses vectorized slicing with NumPy, eliminating multiples in bulk rather than iterating element by element.
