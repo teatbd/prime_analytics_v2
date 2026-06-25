@@ -72,7 +72,6 @@ This connects directly with the Prime Number Theorem:
 \[
 \pi(n) \sim \frac{n}{\log(n)}
 \]
-``
 
 📐 Gap analysis
 
