@@ -50,7 +50,7 @@ n = 20,000,000
 
 📊 Example Visualization
 
-![Gap vs log](./plots/gap_vs_log.pn)
+![Gap vs log](./plots/gap_vs_log.png)
 
 📊 Dataset Structure
 
@@ -110,7 +110,7 @@ Right-skewed distribution with long tail
 
 
 🔹 4. Gap Evolution vs log(n)
-![Gap vs log](./plots/gap_vs_log.pn)
+![Gap vs log](./plots/gap_vs_log.png)
 ✅ Key result:
 Average gap∼log⁡(n)\text{Average gap} \sim \log(n)Average gap∼log(n)
 
