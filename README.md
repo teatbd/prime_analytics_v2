@@ -63,7 +63,7 @@ From generated primes, a dataset is constructed with:
 📈 Key Results & Visualizations
 
 🔹 1. Prime Density
-![Prime Density](./plots/densidad_primos.png)
+![Prime Density](./densidad_primos.png)
 Insight:
 
 Empirical density approaches the theoretical curve
@@ -73,7 +73,7 @@ Confirms:
 
 
 🔹 2. Error Analysis
-![Error vs Theoretical Density](./plots/error_densidad.png)
+![Error vs Theoretical Density](./error_densidad.png)
 Insight:
 
 Error decreases as n grows
@@ -82,7 +82,7 @@ Model becomes more accurate
 
 
 🔹 3. Gap Distribution
-![Gap Distribution](./plots/hist_gaps.png)
+![Gap Distribution](./hist_gaps.png)
 Insight:
 
 Many small gaps
@@ -91,7 +91,7 @@ Right-skewed distribution with long tail
 
 
 🔥 🔹 4. Average Gap vs log(n) (Core Result)
-![Gap vs log](./plots/gap_vs_log.png)
+![Gap vs log](./gap_vs_log.png)
 Key Result:
 The average gap between primes grows approximately as:
 gap ~ log(n)
@@ -103,7 +103,7 @@ This avoids early-stage noise and ensures statistical stability
 
 
 🔹 5. Discrete Validation
-![Average Gap vs log (discrete)](./plots/gap_promedio_vs_log.png)
+![Average Gap vs log (discrete)](./gap_promedio_vs_log.png)
 Insight:
 
 Independent validation at different values of n
@@ -113,7 +113,7 @@ Directly confirms consistency with log(n)
 🔬 Advanced Analysis
 
 🔹 Normalized Gap Distribution
-![Normalized Gap Distribution](./plots/distribucion_gaps_normalizados.png)
+![Normalized Gap Distribution](./distribucion_gaps_normalizados.png)
 Insight:
 After normalizing gaps by log(n):
 
