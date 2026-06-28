@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 # ======================
-# CRIBA (VERSIÓN OPTIMIZADA)
+# SIEVE (OPTIMIZED VERSION)
 # ======================
 def criba(n):
     es_primo = np.ones(n + 1, dtype=bool)
@@ -22,7 +22,7 @@ def criba(n):
 
 
 # ======================
-# GENERACIÓN DE PRIMOS
+# PRIME GENERATION
 # ======================
 n = 20_000_000
 
@@ -52,7 +52,7 @@ df["gap_ma"] = df["gap"].rolling(window=1000).mean()
 
 
 # ======================
-# BINS LOGARÍTMICOS
+# LOGARITHM BINS
 # ======================
 bins = np.logspace(
     np.log10(df["prime"].min()),
@@ -65,132 +65,174 @@ gap_mean = df.groupby("bin")["gap"].mean()
 
 
 # ======================
-# 🔹 1. DENSIDAD
+# 🔹 1. DENSITY
 # ======================
 plt.figure(figsize=(10, 6))
 
-plt.plot(df["prime"], df["density_teo"], color="red", label="Teórica (1/log n)")
-plt.scatter(df["prime"], df["density_real"], s=3, alpha=0.6, label="Real")
+# Empirical density (points)
+plt.scatter(df["prime"], df["density_real"], s=3, alpha=0.6, label="Empirical")
+
+# Theoretical density (line)
+plt.plot(df["prime"], df["density_teo"], color="red", label="Theoretical (1/log n)")
 
 plt.xscale("log")
+
 plt.xlabel("n")
-plt.ylabel("Densidad")
-plt.title(f"Densidad de primos (n={n:,})")
+plt.ylabel("Density")
+plt.title(f"Prime Density vs Theoretical Model (n = {n:,})")
 
 plt.legend()
+plt.tight_layout()
+
 plt.savefig("densidad_primos.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
-
+print("\n" * 3)
 
 # ======================
 # 🔹 2. ERROR
 # ======================
 plt.figure(figsize=(10, 6))
 
-plt.plot(df["prime"], df["error"], alpha=0.5)
+# Error line
+plt.plot(df["prime"], df["error"], alpha=0.6, label="Error")
+
+# Scatter points
 plt.scatter(df["prime"], df["error"], s=3)
 
-plt.axhline(0, color="red")
+# Reference line
+plt.axhline(0, color="red", linestyle="--", label="Zero Line")
+
 plt.xscale("log")
 
 plt.xlabel("n")
 plt.ylabel("Error")
-plt.title("Error: densidad real vs teórica")
+plt.title("Error: Empirical vs Theoretical Density")
+
+plt.legend()
+plt.tight_layout()
 
 plt.savefig("error_densidad.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 3. HISTOGRAMA GAPS
+# 🔹 3. GAP DISTRIBUTION
 # ======================
 plt.figure(figsize=(10, 6))
 
-plt.hist(df["gap"].dropna(), bins=50)
+plt.hist(df["gap"].dropna(), bins=50, density=True)
 
 plt.xlabel("Gap")
-plt.ylabel("Frecuencia")
-plt.title(f"Distribución de gaps (n={n:,})")
+plt.ylabel("Frequency")
+plt.title(f"Gap Distribution (n = {n:,})")
+
+plt.tight_layout()
 
 plt.savefig("hist_gaps.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 4. SCATTER GAPS
+# 🔹 4. PRIME GAPS (SCATTER)
 # ======================
 plt.figure(figsize=(10, 6))
 
-plt.scatter(df["index"], df["gap"], s=3)
+plt.scatter(df["index"], df["gap"], s=2, alpha=0.4)
 
 plt.xscale("log")
 plt.yscale("log")
 
-plt.xlabel("Índice del primo")
+plt.xlabel("Prime Index")
 plt.ylabel("Gap")
-plt.title("Gaps entre primos (log-log)")
+plt.title("Prime Gaps vs Prime Index (Log-Log Scale)")
+
+plt.tight_layout()
 
 plt.savefig("gap_scatter.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 5. GAPS POR BINS
+# 🔹 5. GAPS BY BINS
 # ======================
 plt.figure(figsize=(10, 6))
 
-gap_mean.plot()
+gap_mean.plot(label="Average Gap")
 
 plt.xticks(rotation=45)
-plt.ylabel("Gap promedio")
-plt.title("Gap promedio por bins log")
+
+plt.xlabel("n (log scale bins)")
+plt.ylabel("Average Gap")
+plt.title("Average Prime Gap by Logarithmic Bins")
+
+plt.legend()
+plt.tight_layout()
 
 plt.savefig("gap_bins.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
 # 🔹 6. GAP VS LOG (MA)
 # ======================
-plt.figure()
+plt.figure(figsize=(10, 6))
 
-plt.plot(df["prime"], df["gap_ma"], label="Gap promedio (MA)")
-plt.plot(df["prime"], np.log(df["prime"]), label="log(n)", linestyle="--")
+df_plot = df[df["prime"] >= 10000]
+
+plt.plot(df_plot["prime"], df_plot["gap_ma"], label="Average Gap (MA)")
+plt.plot(df_plot["prime"], np.log(df_plot["prime"]), label="log(n)", linestyle="--")
 
 plt.xscale("log")
-plt.xlabel("n")
-plt.ylabel("Valor")
 
-plt.title("Gap promedio vs log(n)")
+plt.xlabel("n")
+plt.ylabel("Value")
+plt.title("Average Gap vs log(n) (n ≥ 10,000)")
+
 plt.legend()
+plt.tight_layout()
 
 plt.savefig("gap_vs_log.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
 # 🔹 7. BINS VS LOG (LOG-LOG)
 # ======================
+
+# ======================
+# 🔹 7. BINS VS LOG (LOG-LOG)
+# ======================
+
 bin_centers = [interval.mid for interval in gap_mean.index]
 
 plt.figure(figsize=(10, 6))
 
-plt.plot(bin_centers, gap_mean, label="Gap promedio")
+plt.plot(bin_centers, gap_mean, label="Average Gap")
 plt.plot(bin_centers, np.log(bin_centers), label="log(n)", linestyle="--")
 
 plt.xscale("log")
 plt.yscale("log")
 
+plt.xlabel("n (log scale)")
+plt.ylabel("Value")
+plt.title("Average Gap vs log(n) (Log-Log Scale)")
+
 plt.legend()
-plt.title("Gap medio vs log(n)")
+plt.tight_layout()
 
 plt.savefig("gap_bins_vs_log.png", dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 8. GAP PROMEDIO VS N (EFICIENTE)
+# 🔹 8. GAP VS LOG (DISCRETE)
 # ======================
 n_values = [10_000, 50_000, 100_000, 500_000, 1_000_000]
 
@@ -201,47 +243,54 @@ for val in n_values:
     gaps = np.diff(primos_n)
     gap_promedios.append(gaps.mean())
 
-plt.figure()
+plt.figure(figsize=(10, 6))
 
-plt.plot(n_values, gap_promedios, marker='o', label='Gap promedio')
+plt.plot(n_values, gap_promedios, marker='o', label='Average Gap')
 plt.plot(n_values, np.log(n_values), marker='s', label='log(n)')
 
 plt.xscale('log')
-plt.xlabel('n')
-plt.ylabel('Valor')
-plt.title('Gap promedio vs log(n)')
-plt.legend()
 
-plt.savefig('gap_promedio_vs_log.png')
+plt.xlabel('n')
+plt.ylabel('Value')
+plt.title('Average Gap vs log(n) (Discrete Sample Points)')
+
+plt.legend()
+plt.tight_layout()
+
+plt.savefig('gap_promedio_vs_log.png', dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 9. DISTRIBUCIÓN NORMALIZADA
+# 🔹 9. GAP DISTRIBUTION (SCALES)
 # ======================
 n_values = [10_000, 100_000, 1_000_000]
 
-plt.figure()
+plt.figure(figsize=(10, 6))
 
 for val in n_values:
     primos_n = primos[primos <= val]
     gaps = np.diff(primos_n)
 
-    plt.hist(gaps, bins=50, density=True, alpha=0.5, label=f'n={val:,}')
+    plt.hist(gaps, bins=50, density=True, alpha=0.5, label=f'n = {val:,}')
 
 plt.xlabel('Gap')
-plt.ylabel('Densidad')
-plt.title('Distribución de gaps (normalizada)')
-plt.legend()
+plt.ylabel('Density')
+plt.title('Gap Distribution Across Different Scales')
 
-plt.savefig('distribucion_gaps_comparada.png')
+plt.legend()
+plt.tight_layout()
+
+plt.savefig('distribucion_gaps_comparada.png', dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 10. DISTRIBUCIÓN EN LÍNEAS
+# 🔹 10. GAP DISTRIBUTION (LINES)
 # ======================
-plt.figure()
+plt.figure(figsize=(10, 6))
 
 for val in n_values:
     primos_n = primos[primos <= val]
@@ -250,21 +299,24 @@ for val in n_values:
     unique_gaps, counts = np.unique(gaps, return_counts=True)
     density = counts / counts.sum()
 
-    plt.plot(unique_gaps, density, label=f'n={val:,}')
+    plt.plot(unique_gaps, density, label=f'n = {val:,}')
 
 plt.xlabel('Gap')
-plt.ylabel('Frecuencia relativa')
-plt.title('Distribución de gaps (líneas)')
-plt.legend()
+plt.ylabel('Relative Frequency')
+plt.title('Gap Distribution (Line Representation)')
 
-plt.savefig('distribucion_gaps_lineas.png')
+plt.legend()
+plt.tight_layout()
+
+plt.savefig('distribucion_gaps_lineas.png', dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
-# 🔹 11. GAPS NORMALIZADOS
+# 🔹 11. NORMALIZED GAPS
 # ======================
-plt.figure()
+plt.figure(figsize=(10, 6))
 
 for val in n_values:
     primos_n = primos[primos <= val]
@@ -275,16 +327,19 @@ for val in n_values:
     unique_gaps, counts = np.unique(gaps_norm.round(2), return_counts=True)
     density = counts / counts.sum()
 
-    plt.plot(unique_gaps, density, label=f'n={val:,}')
+    plt.plot(unique_gaps, density, label=f'n = {val:,}')
 
 plt.xlabel('Gap / log(n)')
-plt.ylabel('Frecuencia relativa')
-plt.title('Distribución de gaps normalizados')
-plt.legend()
+plt.ylabel('Relative Frequency')
+plt.title('Normalized Gap Distribution')
 
-plt.savefig('distribucion_gaps_normalizados.png')
+plt.legend()
+plt.tight_layout()
+
+plt.savefig('distribucion_gaps_normalizados.png', dpi=300, bbox_inches="tight")
 plt.show()
 plt.close()
+print("\n" * 3)
 
 # ======================
 # BENCHMARK
